@@ -1,4 +1,27 @@
     </main>
+    <style>
+        .whatsapp-link, .call-link {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 0.9em;
+            transition: transform 0.2s ease;
+        }
+        .whatsapp-link {
+            color: #25D366;
+        }
+        .call-link {
+            color: #007bff;
+        }
+        .whatsapp-link:hover, .call-link:hover {
+            transform: scale(1.2);
+        }
+        .whatsapp-link:hover {
+            color: #128C7E;
+        }
+        .call-link:hover {
+            color: #0056b3;
+        }
+    </style>
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -6,7 +29,24 @@
                     <h2>Sanduni Low Cost Homes</h2>
                     <p>Quality construction services at affordable prices. Building dreams one project at a time.</p>
                     <div class="contact">
-                        <span><i class="fas fa-phone"></i> &nbsp; +94 727 160 139 / +94 718 160 139</span>
+                        <span>
+                            <i class="fas fa-phone"></i> &nbsp; 
+                            +94 727 160 139 
+                            <a href="tel:+94727160139" class="call-link" title="Call via phone">
+                                <i class="fas fa-phone-alt"></i>
+                            </a>
+                            <a href="https://wa.me/94727160139" class="whatsapp-link" target="_blank" title="Chat on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            / 
+                            +94 718 160 139
+                            <a href="tel:+94718160139" class="call-link" title="Call via phone">
+                                <i class="fas fa-phone-alt"></i>
+                            </a>
+                            <a href="https://wa.me/94718160139" class="whatsapp-link" target="_blank" title="Chat on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </span>
                         <span><i class="fas fa-envelope"></i> &nbsp; info@sandunilowcosthomes.lk</span>
                         <span><i class="fas fa-map-marker-alt"></i> &nbsp; 26 Mahawatta, Kotugoda, Ja-Ela, Sri Lanka 11380</span>
                     </div>

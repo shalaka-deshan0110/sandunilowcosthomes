@@ -5,6 +5,30 @@
     </div>
 </div>
 
+<style>
+    .whatsapp-link, .call-link {
+        display: inline-block;
+        margin-left: 8px;
+        font-size: 1.2em;
+        transition: transform 0.2s ease;
+    }
+    .whatsapp-link {
+        color: #25D366;
+    }
+    .call-link {
+        color: #007bff;
+    }
+    .whatsapp-link:hover, .call-link:hover {
+        transform: scale(1.2);
+    }
+    .whatsapp-link:hover {
+        color: #128C7E;
+    }
+    .call-link:hover {
+        color: #0056b3;
+    }
+</style>
+
 <section class="contact-section">
     <div class="container">
         <div class="contact-info-form">
@@ -28,7 +52,22 @@
                     </div>
                     <div class="details">
                         <h3>Phone</h3>
-                        <p>Office: +94 727 160 139<br>Mobile: +94 718 160 139</p>
+                        <p>
+                            Office: +94 727 160 139 
+                            <a href="tel:+94727160139" class="call-link" title="Call via phone">
+                                <i class="fas fa-phone-alt"></i>
+                            </a>
+                            <a href="https://wa.me/94727160139" class="whatsapp-link" target="_blank" title="Chat on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a><br>
+                            Mobile: +94 718 160 139
+                            <a href="tel:+94718160139" class="call-link" title="Call via phone">
+                                <i class="fas fa-phone-alt"></i>
+                            </a>
+                            <a href="https://wa.me/94718160139" class="whatsapp-link" target="_blank" title="Chat on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </p>
                     </div>
                 </div>
                 
@@ -72,6 +111,13 @@
                 $name = $email = $phone = $subject = $message = "";
                 $formSubmitted = false;
                 
+                function test_input($data) {
+                    $data = trim($data);
+                    $data = stripslashes($data);
+                    $data = htmlspecialchars($data);
+                    return $data;
+                }
+                
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Validate name
                     if (empty($_POST["name"])) {
@@ -98,6 +144,8 @@
                     // Subject (optional)
                     if (!empty($_POST["subject"])) {
                         $subject = test_input($_POST["subject"]);
+                    } else {
+                        $subject = "Website Contact Form: $name";
                     }
                     
                     // Validate message
@@ -109,20 +157,20 @@
                     
                     // If no errors, process the form
                     if (empty($nameErr) && empty($emailErr) && empty($messageErr)) {
-                        // In a real application, you would send an email or save to database
-                        // For this example, we'll just display a success message
+                        // Send email
+                        $to = 'nandanapathmasiri94@gmail.com, info@sandunilowcosthomes.lk, salu86er@gmail.com, sandunilowcosthomes.1scyzg@zapiermail.com';
+                        $email_subject = $subject;
+                        $email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email\n\nPhone: $phone\n\nMessage:\n$message";
+                        $headers = "From: noreply@sandunilowcosthomes.lk\n";
+                        $headers .= "Reply-To: $email";
+                        
+                        $mail_sent = mail($to, $email_subject, $email_body, $headers);
+                        
                         $formSubmitted = true;
                         
                         // Reset form fields
                         $name = $email = $phone = $subject = $message = "";
                     }
-                }
-                
-                function test_input($data) {
-                    $data = trim($data);
-                    $data = stripslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
                 }
                 ?>
                 
