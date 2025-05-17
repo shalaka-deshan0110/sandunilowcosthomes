@@ -1,0 +1,11 @@
+# .cpanel.yml: Root deployment configuration for cPanel
+version: 1
+
+deployment:
+  tasks:
+    - name: Install dependencies
+      exec: "npm install"
+    - name: Build application
+      exec: "npm run build"
+    - name: Start application
+      exec: "npm start"
