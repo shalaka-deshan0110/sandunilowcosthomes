@@ -171,6 +171,7 @@ header .container {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    position: relative;
 }
 
 .logo h1 {
@@ -221,13 +222,15 @@ nav ul li a.active::after {
     width: 100%;
 }
 
+/* Mobile Navigation Controls */
 .nav-toggle {
-    display: none;
+    display: none; /* Hide the checkbox */
 }
 
 .nav-toggle-label {
-    display: none;
+    display: none; /* Hidden by default, shown in mobile view */
     cursor: pointer;
+    z-index: 1001;
 }
 
 /* ===== MAIN CONTENT STYLES ===== */
@@ -1436,6 +1439,62 @@ div.footer-content > div.footer-section.contact-form > form > div.form-group tex
     font-size: 14px;
 }
 
+/* Mobile Navigation Overlay (for very small screens) */
+@media screen and (max-width: 480px) {
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.98);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-100%);
+        transition: transform 0.4s ease-in-out;
+        z-index: 1000;
+    }
+    
+    .nav-toggle:checked ~ nav {
+        transform: translateY(0);
+        max-height: 100vh;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin: 10px 0;
+        padding: 10px 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        transition-delay: 0s;
+    }
+    
+    .nav-toggle:checked ~ nav ul li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .nav-toggle:checked ~ nav ul li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-toggle:checked ~ nav ul li:nth-child(2) { transition-delay: 0.2s; }
+    .nav-toggle:checked ~ nav ul li:nth-child(3) { transition-delay: 0.3s; }
+    .nav-toggle:checked ~ nav ul li:nth-child(4) { transition-delay: 0.4s; }
+    .nav-toggle:checked ~ nav ul li:nth-child(5) { transition-delay: 0.5s; }
+    .nav-toggle:checked ~ nav ul li:nth-child(6) { transition-delay: 0.6s; }
+    
+    nav ul li a {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 992px) {
     .about-image {
@@ -1469,69 +1528,116 @@ div.footer-content > div.footer-section.contact-form > form > div.form-group tex
 }
 
 @media screen and (max-width: 768px) {
+    /* Basic mobile header styles */
     header .container {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 15px;
     }
     
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    /* Hamburger menu button */
     .nav-toggle-label {
         display: block;
-        position: absolute;
-        top: 20px;
-        right: 15px;
+        position: relative;
+        width: 30px;
+        height: 22px;
+        background: transparent;
+        cursor: pointer;
+        z-index: 2;
     }
     
     .nav-toggle-label span,
     .nav-toggle-label span::before,
     .nav-toggle-label span::after {
-        display: block;
+        content: '';
+        position: absolute;
         width: 30px;
         height: 3px;
         background-color: var(--dark-color);
-        position: relative;
+        border-radius: 2px;
+        transition: all 0.3s ease;
     }
     
-    .nav-toggle-label span::before,
-    .nav-toggle-label span::after {
-        content: '';
-        position: absolute;
+    .nav-toggle-label span {
+        top: 10px;
     }
     
     .nav-toggle-label span::before {
-        bottom: 8px;
+        top: -8px;
     }
     
     .nav-toggle-label span::after {
         top: 8px;
     }
     
+    /* Animate hamburger to X when active */
+    .nav-toggle:checked + .nav-toggle-label span {
+        background: transparent;
+    }
+    
+    .nav-toggle:checked + .nav-toggle-label span::before {
+        top: 0;
+        transform: rotate(45deg);
+        background-color: var(--primary-color);
+    }
+    
+    .nav-toggle:checked + .nav-toggle-label span::after {
+        top: 0;
+        transform: rotate(-45deg);
+        background-color: var(--primary-color);
+    }
+    
+    /* Mobile navigation menu */
     nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
         width: 100%;
         background-color: #fff;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        display: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        z-index: 1;
+        box-shadow: none;
+        transform: none;
     }
     
     .nav-toggle:checked ~ nav {
-        display: block;
+        max-height: 500px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     }
     
+    /* Mobile menu items */
     nav ul {
-        flex-direction: column;
+        display: block;
+        margin: 0;
         padding: 0;
     }
     
     nav ul li {
         margin: 0;
-        text-align: center;
-        padding: 15px 0;
-        border-bottom: 1px solid var(--border-color);
+        width: 100%;
+        border-top: 1px solid #eee;
     }
     
-    nav ul li:last-child {
-        border-bottom: none;
+    nav ul li a {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        color: var(--dark-color);
+    }
+    
+    nav ul li a::after {
+        display: none;
+    }
+    
+    nav ul li a:hover,
+    nav ul li a.active {
+        background-color: rgba(230, 126, 34, 0.1);
+        color: var(--primary-color);
     }
     
     .hero-content h1 {

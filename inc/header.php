@@ -137,11 +137,11 @@
                     <h1>Sanduni Low Cost Homes</h1>
                 </a>
             </div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
             <nav>
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
                 <ul>
                     <li><a href="/" class="<?php echo ($page == 'home') ? 'active' : ''; ?>">Home</a></li>
                     <li><a href="/about" class="<?php echo ($page == 'about') ? 'active' : ''; ?>">About Us</a></li>

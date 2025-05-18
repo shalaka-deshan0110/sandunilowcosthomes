@@ -6,7 +6,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile Navigation Toggle
     const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const mobileMenuClose = function() {
+        if (navToggle) {
+            navToggle.checked = false;
+            document.body.style.overflow = 'auto';
+        }
+    };
+    
     if(navToggle) {
+        // Toggle body scroll when menu is opened/closed
         navToggle.addEventListener('change', function() {
             if(this.checked) {
                 document.body.style.overflow = 'hidden';
@@ -15,6 +24,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Close mobile menu when a navigation link is clicked
+    if (navLinks.length > 0) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    // Small delay to allow the click to register before closing menu
+                    setTimeout(mobileMenuClose, 50);
+                }
+            });
+        });
+    }
+    
+    // Close menu when window is resized beyond mobile breakpoint
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navToggle && navToggle.checked) {
+            mobileMenuClose();
+        }
+    });
 
     // FAQ Toggle
     const faqQuestions = document.querySelectorAll('.faq-question');
